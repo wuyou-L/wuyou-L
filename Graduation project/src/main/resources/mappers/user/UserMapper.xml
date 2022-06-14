@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.user.dao.UserMapper">
+	<insert id="addUser" parameterType="com.wuyou.user.bean.UserBean">
+		insert into t_user
+		(user_account,user_pwd,user_name,user_sex,user_card_no,user_type,user_remark,user_time_create,user_img_name,user_img_url,user_role_code,user_role_name)
+		values
+		(#{user_account},#{user_pwd},#{user_name},#{user_sex},#{user_card_no},#{user_type},#{user_remark},now(),#{user_img_name},#{user_img_url},#{user_role_code},#{user_role_name})
+	</insert>
+
+	<delete id="deleteUser" parameterType="com.wuyou.user.bean.UserBean">
+		delete from t_user
+		where user_id = #{user_id}
+	</delete>
+
+	<update id="updateUser" parameterType="com.wuyou.user.bean.UserBean">
+		update t_user
+		<set>
+			<if test="user_id !=null">
+				user_id = #{user_id},
+			</if>
+			<if test="user_account !=null">
+				user_account = #{user_account},
+			</if>
+			<if test="user_pwd !=null">
+				user_pwd = #{user_pwd},
+			</if>
+			<if test="user_name !=null">
+				user_name = #{user_name},
+			</if>
+			<if test="user_sex !=null">
+				user_sex = #{user_sex},
+			</if>
+			<if test="user_card_no !=null">
+				user_card_no = #{user_card_no},
+			</if>
+			<if test="user_type !=null">
+				user_type = #{user_type},
+			</if>
+			<if test="user_remark !=null">
+				user_remark = #{user_remark},
+			</if>
+			<if test="user_time_create !=null">
+				user_time_create = #{user_time_create},
+			</if>
+			<if test="user_img_name !=null">
+				user_img_name = #{user_img_name},
+			</if>
+			<if test="user_img_url !=null">
+				user_img_url = #{user_img_url},
+			</if>
+			<if test="user_role_code !=null">
+				user_role_code = #{user_role_code},
+			</if>
+			<if test="user_role_name !=null">
+				user_role_name = #{user_role_name},
+			</if>
+		</set>
+		where user_id = #{user_id}
+	</update>
+
+	<select id="queryUserList" parameterType="com.wuyou.user.bean.UserPageBean" resultType="com.wuyou.user.bean.UserBean">
+		select 
+		user_id,user_account,user_pwd,user_name,user_sex,user_card_no,user_type,user_remark,user_time_create,user_img_name,user_img_url,user_role_code,user_role_name
+		 from t_user
+		<where>
+			<if test="user_id !=null">
+				 and user_id = #{user_id}
+			</if>
+			<if test="user_account !=null">
+				 and user_account = #{user_account}
+			</if>
+			<if test="user_pwd !=null">
+				 and user_pwd = #{user_pwd}
+			</if>
+			<if test="user_name !=null">
+				 and user_name like "%%${user_name}%%"
+			</if>
+			<if test="user_sex !=null">
+				 and user_sex = #{user_sex}
+			</if>
+			<if test="user_card_no !=null">
+				 and user_card_no = #{user_card_no}
+			</if>
+			<if test="user_type !=null">
+				 and user_type = #{user_type}
+			</if>
+			<if test="user_remark !=null">
+				 and user_remark = #{user_remark}
+			</if>
+			<if test="user_time_create !=null">
+				 and user_time_create <![CDATA[>=]]> #{user_time_create}
+			</if>
+			<if test="user_time_end !=null">
+				and user_time_create <![CDATA[<=]]> #{user_time_end}
+			</if>
+			<if test="user_img_name !=null">
+				 and user_img_name = #{user_img_name}
+			</if>
+			<if test="user_img_url !=null">
+				 and user_img_url = #{user_img_url}
+			</if>
+			<if test="user_role_code !=null">
+				 and user_role_code = #{user_role_code}
+			</if>
+			<if test="user_role_name !=null">
+				 and user_role_name = #{user_role_name}
+			</if>
+		</where>
+		<if test="page != null" >
+			<![CDATA[  limit #{page.startNum},#{page.pageSize} ]]>
+		</if>
+	</select>
+
+	<select id="queryUserCount" parameterType="com.wuyou.user.bean.UserBean" resultType="Integer">
+		select 
+		 count(1) 
+		 from t_user
+		<where>
+			<if test="user_id !=null">
+				 and user_id = #{user_id}
+			</if>
+			<if test="user_account !=null">
+				 and user_account = #{user_account}
+			</if>
+			<if test="user_pwd !=null">
+				 and user_pwd = #{user_pwd}
+			</if>
+			<if test="user_name !=null">
+				and user_name like "%%${user_name}%%"
+			</if>
+			<if test="user_sex !=null">
+				 and user_sex = #{user_sex}
+			</if>
+			<if test="user_card_no !=null">
+				 and user_card_no = #{user_card_no}
+			</if>
+			<if test="user_type !=null">
+				 and user_type = #{user_type}
+			</if>
+			<if test="user_remark !=null">
+				 and user_remark = #{user_remark}
+			</if>
+			<if test="user_time_create !=null">
+				 and user_time_create = #{user_time_create}
+			</if>
+			<if test="user_img_name !=null">
+				 and user_img_name = #{user_img_name}
+			</if>
+			<if test="user_img_url !=null">
+				 and user_img_url = #{user_img_url}
+			</if>
+			<if test="user_role_code !=null">
+				 and user_role_code = #{user_role_code}
+			</if>
+			<if test="user_role_name !=null">
+				 and user_role_name = #{user_role_name}
+			</if>
+		</where>
+	</select>
+
+	<select id="querySingleUser" parameterType="com.wuyou.user.bean.UserBean" resultType="com.wuyou.user.bean.UserBean">
+		select 
+		user_id,user_account,user_pwd,user_name,user_sex,user_card_no,user_type,user_remark,user_time_create,user_img_name,user_img_url,user_role_code,user_role_name
+		 from t_user
+		<where>
+			<if test="user_id !=null">
+				 and user_id = #{user_id}
+			</if>
+			<if test="user_account !=null">
+				 and user_account = #{user_account}
+			</if>
+			<if test="user_pwd !=null">
+				 and user_pwd = #{user_pwd}
+			</if>
+			<if test="user_name !=null">
+				 and user_name = #{user_name}
+			</if>
+			<if test="user_sex !=null">
+				 and user_sex = #{user_sex}
+			</if>
+			<if test="user_card_no !=null">
+				 and user_card_no = #{user_card_no}
+			</if>
+			<if test="user_type !=null">
+				 and user_type = #{user_type}
+			</if>
+			<if test="user_remark !=null">
+				 and user_remark = #{user_remark}
+			</if>
+			<if test="user_time_create !=null">
+				 and user_time_create = #{user_time_create}
+			</if>
+			<if test="user_img_name !=null">
+				 and user_img_name = #{user_img_name}
+			</if>
+			<if test="user_img_url !=null">
+				 and user_img_url = #{user_img_url}
+			</if>
+			<if test="user_role_code !=null">
+				 and user_role_code = #{user_role_code}
+			</if>
+			<if test="user_role_name !=null">
+				 and user_role_name = #{user_role_name}
+			</if>
+		</where>
+	</select>
+
+	<select id="loadByUsername" resultType="com.wuyou.login.pojo.JwtUser">
+		select user_account as username,user_pwd as password, user_role_code as roleCode from t_user where user_account = #{username}
+	</select>
+
+</mapper>

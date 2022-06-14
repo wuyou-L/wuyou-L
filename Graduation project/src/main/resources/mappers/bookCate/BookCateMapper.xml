@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.bookCate.dao.BookCateMapper">
+	<insert id="addBookCate" parameterType="com.wuyou.bookCate.bean.BookCateBean">
+		insert into t_book_cate
+		(cate_id,cate_code,cate_name,cate_parent_code,cate_parent_name,cate_img_url,cate_img_name,cate_create_account,cate_create_time, is_using)
+		values
+		(#{cate_id},#{cate_code},#{cate_name},#{cate_parent_code},#{cate_parent_name},#{cate_img_url},#{cate_img_name},#{cate_create_account},#{cate_create_time}, ${is_using})
+	</insert>
+
+	<delete id="deleteBookCate" parameterType="com.wuyou.bookCate.bean.BookCateBean">
+		delete from t_book_cate
+		<where>
+			<if test="cate_id != null and cate_id != ''">
+				cate_id = #{cate_id}
+			</if>
+			<if test="cate_code != null and cate_code != ''">
+				cate_code = #{cate_code}
+			</if>
+			<if test="cate_parent_code != null and cate_parent_code != ''">
+				cate_parent_code = #{cate_parent_code}
+			</if>
+		</where>
+	</delete>
+
+	<update id="updateBookCate" parameterType="com.wuyou.bookCate.bean.BookCateBean">
+		update t_book_cate
+		<set>
+			<if test="cate_id !=null">
+				cate_id = #{cate_id},
+			</if>
+			<if test="cate_code !=null">
+				cate_code = #{cate_code},
+			</if>
+			<if test="cate_name !=null">
+				cate_name = #{cate_name},
+			</if>
+			<if test="cate_parent_code !=null">
+				cate_parent_code = #{cate_parent_code},
+			</if>
+			<if test="cate_parent_name !=null">
+				cate_parent_name = #{cate_parent_name},
+			</if>
+			<if test="cate_img_url !=null">
+				cate_img_url = #{cate_img_url},
+			</if>
+			<if test="cate_img_name !=null">
+				cate_img_name = #{cate_img_name},
+			</if>
+			<if test="cate_create_account !=null">
+				cate_create_account = #{cate_create_account},
+			</if>
+			<if test="cate_create_time !=null">
+				cate_create_time = #{cate_create_time},
+			</if>
+			<if test="is_using !=null">
+				is_using = #{is_using},
+			</if>
+		</set>
+		where cate_id = #{cate_id}
+	</update>
+
+	<select id="queryBookCateList" parameterType="com.wuyou.bookCate.bean.BookCatePageBean" resultType="com.wuyou.bookCate.bean.BookCateBean">
+		select 
+		cate_id,cate_code,cate_name,cate_parent_code,cate_parent_name,cate_img_url,cate_img_name,cate_create_account,cate_create_time,is_using
+		 from t_book_cate
+		<where>
+			<if test="cate_id !=null">
+				 and cate_id = #{cate_id}
+			</if>
+			<if test="cate_code !=null">
+				 and cate_code = #{cate_code}
+			</if>
+			<if test="cate_name !=null">
+				 and cate_name = #{cate_name}
+			</if>
+			<if test="cate_parent_code !=null">
+				 and cate_parent_code = #{cate_parent_code}
+			</if>
+			<if test="cate_parent_name !=null">
+				 and cate_parent_name = #{cate_parent_name}
+			</if>
+			<if test="cate_img_url !=null">
+				 and cate_img_url = #{cate_img_url}
+			</if>
+			<if test="cate_img_name !=null">
+				 and cate_img_name = #{cate_img_name}
+			</if>
+			<if test="cate_create_account !=null">
+				 and cate_create_account = #{cate_create_account}
+			</if>
+			<if test="cate_create_time !=null">
+				 and cate_create_time = #{cate_create_time}
+			</if>
+			<if test="is_using !=null">
+				and is_using = #{is_using}
+			</if>
+		</where>
+		<if test="page != null" >
+			<![CDATA[  limit #{page.startNum},#{page.pageSize} ]]>
+		</if>
+	</select>
+
+	<select id="queryBookCateCount" parameterType="com.wuyou.bookCate.bean.BookCateBean" resultType="Integer">
+		select 
+		 count(1) 
+		 from t_book_cate
+		<where>
+			<if test="cate_id !=null">
+				 and cate_id = #{cate_id}
+			</if>
+			<if test="cate_code !=null">
+				 and cate_code = #{cate_code}
+			</if>
+			<if test="cate_name !=null">
+				 and cate_name = #{cate_name}
+			</if>
+			<if test="cate_parent_code !=null">
+				 and cate_parent_code = #{cate_parent_code}
+			</if>
+			<if test="cate_parent_name !=null">
+				 and cate_parent_name = #{cate_parent_name}
+			</if>
+			<if test="cate_img_url !=null">
+				 and cate_img_url = #{cate_img_url}
+			</if>
+			<if test="cate_img_name !=null">
+				 and cate_img_name = #{cate_img_name}
+			</if>
+			<if test="cate_create_account !=null">
+				 and cate_create_account = #{cate_create_account}
+			</if>
+			<if test="cate_create_time !=null">
+				 and cate_create_time = #{cate_create_time}
+			</if>
+			<if test="is_using !=null">
+			and is_using = #{is_using}
+		</if>
+		</where>
+	</select>
+
+	<select id="querySingleBookCate" parameterType="com.wuyou.bookCate.bean.BookCateBean" resultType="com.wuyou.bookCate.bean.BookCateBean">
+		select 
+		cate_id,cate_code,cate_name,cate_parent_code,cate_parent_name,cate_img_url,cate_img_name,cate_create_account,cate_create_time,is_using
+		 from t_book_cate
+		<where>
+			<if test="cate_id !=null">
+				 and cate_id = #{cate_id}
+			</if>
+			<if test="cate_code !=null">
+				 and cate_code = #{cate_code}
+			</if>
+			<if test="cate_name !=null">
+				 and cate_name = #{cate_name}
+			</if>
+			<if test="cate_parent_code !=null">
+				 and cate_parent_code = #{cate_parent_code}
+			</if>
+			<if test="cate_parent_name !=null">
+				 and cate_parent_name = #{cate_parent_name}
+			</if>
+			<if test="cate_img_url !=null">
+				 and cate_img_url = #{cate_img_url}
+			</if>
+			<if test="cate_img_name !=null">
+				 and cate_img_name = #{cate_img_name}
+			</if>
+			<if test="cate_create_account !=null">
+				 and cate_create_account = #{cate_create_account}
+			</if>
+			<if test="cate_create_time !=null">
+				 and cate_create_time = #{cate_create_time}
+			</if>
+			<if test="is_using !=null">
+				and is_using = #{is_using}
+			</if>
+		</where>
+	</select>
+    <select id="queryMaxCode" resultType="java.lang.String">
+		select max(cate_code) from t_book_cate where cate_parent_code = #{cateCode}
+	</select>
+
+
+</mapper>

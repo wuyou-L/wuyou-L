@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.book.dao.BookMapper">
+	<insert id="addBook" keyProperty="book_id" useGeneratedKeys="true"
+			parameterType="com.wuyou.book.bean.BookBean">
+		insert into t_book
+		(book_id,book_isbn,book_name,book_name_english,book_publisher,book_publisher_time,book_kind_code,book_kind_name,book_author,book_price,book_remark,book_img_name,book_img_url,book_status,book_create_time)
+		values
+		(#{book_id},#{book_isbn},#{book_name},#{book_name_english},#{book_publisher},#{book_publisher_time},#{book_kind_code},#{book_kind_name},#{book_author},#{book_price},#{book_remark},#{book_img_name},#{book_img_url},#{book_status},now())
+	</insert>
+
+	<delete id="deleteBook" parameterType="com.wuyou.book.bean.BookBean">
+		delete from t_book
+		where book_id = #{book_id}
+	</delete>
+
+	<update id="updateBook" parameterType="com.wuyou.book.bean.BookBean">
+		update t_book
+		<set>
+			<if test="book_id !=null">
+				book_id = #{book_id},
+			</if>
+			<if test="book_isbn !=null">
+				book_isbn = #{book_isbn},
+			</if>
+			<if test="book_name !=null">
+				book_name = #{book_name},
+			</if>
+			<if test="book_name_english !=null">
+				book_name_english = #{book_name_english},
+			</if>
+			<if test="book_publisher !=null">
+				book_publisher = #{book_publisher},
+			</if>
+			<if test="book_publisher_time !=null">
+				book_publisher_time = #{book_publisher_time},
+			</if>
+			<if test="book_kind_code !=null">
+				book_kind_code = #{book_kind_code},
+			</if>
+			<if test="book_kind_name !=null">
+				book_kind_name = #{book_kind_name},
+			</if>
+			<if test="book_author !=null">
+				book_author = #{book_author},
+			</if>
+			<if test="book_price !=null">
+				book_price = #{book_price},
+			</if>
+			<if test="book_remark !=null">
+				book_remark = #{book_remark},
+			</if>
+			<if test="book_img_name !=null">
+				book_img_name = #{book_img_name},
+			</if>
+			<if test="book_img_url !=null">
+				book_img_url = #{book_img_url},
+			</if>
+			<if test="book_status !=null">
+				book_status = #{book_status},
+			</if>
+		</set>
+		where book_id = #{book_id}
+	</update>
+
+	<select id="queryBookList" parameterType="com.wuyou.book.bean.BookPageBean" resultType="com.wuyou.book.bean.BookBean">
+		select 
+		book_id,book_isbn,book_name,book_name_english,book_publisher,book_publisher_time,book_kind_code,cate.cate_name as book_kind_name,book_author,book_price,book_remark,book_img_name,book_img_url,book_status,book_create_time
+		 from t_book book
+		 left join t_book_cate cate on book.book_kind_code = cate.cate_code
+		<where>
+			<if test="book_id !=null">
+				 and book_id = #{book_id}
+			</if>
+			<if test="book_isbn !=null">
+				 and book_isbn = #{book_isbn}
+			</if>
+			<if test="book_name !=null">
+				 and book_name like "%%${book_name}%%"
+			</if>
+			<if test="book_name_english !=null">
+				 and book_name_english like "%%${book_name_english}%%"
+			</if>
+			<if test="book_publisher !=null">
+				 and book_publisher = #{book_publisher}
+			</if>
+			<if test="book_publisher_time !=null">
+				 and book_publisher_time = #{book_publisher_time}
+			</if>
+			<if test="book_kind_code !=null">
+				 and book_kind_code = #{book_kind_code}
+			</if>
+			<if test="book_kind_name !=null">
+				 and book_kind_name = #{book_kind_name}
+			</if>
+			<if test="book_author !=null">
+				 and book_author = #{book_author}
+			</if>
+			<if test="book_price !=null">
+				 and book_price = #{book_price}
+			</if>
+			<if test="book_remark !=null">
+				 and book_remark = #{book_remark}
+			</if>
+			<if test="book_img_name !=null">
+				 and book_img_name = #{book_img_name}
+			</if>
+			<if test="book_img_url !=null">
+				 and book_img_url = #{book_img_url}
+			</if>
+			<if test="book_status !=null">
+				 and book_status = #{book_status}
+			</if>
+		</where>
+		<if test="page != null" >
+			<![CDATA[  limit #{page.startNum},#{page.pageSize} ]]>
+		</if>
+	</select>
+
+	<select id="queryBookCount" parameterType="com.wuyou.book.bean.BookBean" resultType="Integer">
+		select 
+		 count(1) 
+		 from t_book
+		<where>
+			<if test="book_id !=null">
+				 and book_id = #{book_id}
+			</if>
+			<if test="book_isbn !=null">
+				 and book_isbn = #{book_isbn}
+			</if>
+			<if test="book_name !=null">
+				and book_name like "%%${book_name}%%"
+			</if>
+			<if test="book_name_english !=null">
+				and book_name_english like "%%${book_name_english}%%"
+			</if>
+			<if test="book_publisher !=null">
+				 and book_publisher = #{book_publisher}
+			</if>
+			<if test="book_publisher_time !=null">
+				 and book_publisher_time = #{book_publisher_time}
+			</if>
+			<if test="book_kind_code !=null">
+				 and book_kind_code = #{book_kind_code}
+			</if>
+			<if test="book_kind_name !=null">
+				 and book_kind_name = #{book_kind_name}
+			</if>
+			<if test="book_author !=null">
+				 and book_author = #{book_author}
+			</if>
+			<if test="book_price !=null">
+				 and book_price = #{book_price}
+			</if>
+			<if test="book_remark !=null">
+				 and book_remark = #{book_remark}
+			</if>
+			<if test="book_img_name !=null">
+				 and book_img_name = #{book_img_name}
+			</if>
+			<if test="book_img_url !=null">
+				 and book_img_url = #{book_img_url}
+			</if>
+			<if test="book_status !=null">
+				 and book_status = #{book_status}
+			</if>
+		</where>
+	</select>
+
+	<select id="querySingleBook" parameterType="com.wuyou.book.bean.BookBean" resultType="com.wuyou.book.bean.BookBean">
+		select 
+		book_id,book_isbn,book_name,book_name_english,book_publisher,book_publisher_time,book_kind_code,book_kind_name,book_author,book_price,book_remark,book_img_name,book_img_url,book_status,book_create_time
+		 from t_book
+		<where>
+			<if test="book_id !=null">
+				 and book_id = #{book_id}
+			</if>
+			<if test="book_isbn !=null">
+				 and book_isbn = #{book_isbn}
+			</if>
+			<if test="book_name !=null">
+				 and book_name = #{book_name}
+			</if>
+			<if test="book_name_english !=null">
+				 and book_name_english = #{book_name_english}
+			</if>
+			<if test="book_publisher !=null">
+				 and book_publisher = #{book_publisher}
+			</if>
+			<if test="book_publisher_time !=null">
+				 and book_publisher_time = #{book_publisher_time}
+			</if>
+			<if test="book_kind_code !=null">
+				 and book_kind_code = #{book_kind_code}
+			</if>
+			<if test="book_kind_name !=null">
+				 and book_kind_name = #{book_kind_name}
+			</if>
+			<if test="book_author !=null">
+				 and book_author = #{book_author}
+			</if>
+			<if test="book_price !=null">
+				 and book_price = #{book_price}
+			</if>
+			<if test="book_remark !=null">
+				 and book_remark = #{book_remark}
+			</if>
+			<if test="book_img_name !=null">
+				 and book_img_name = #{book_img_name}
+			</if>
+			<if test="book_img_url !=null">
+				 and book_img_url = #{book_img_url}
+			</if>
+			<if test="book_status !=null">
+				 and book_status = #{book_status}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

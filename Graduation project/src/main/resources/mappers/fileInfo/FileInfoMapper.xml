@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.fileInfo.dao.FileInfoMapper">
+	<insert id="addFileInfo" parameterType="com.wuyou.fileInfo.bean.FileInfoBean">
+		insert into t_file_info
+		(id,file_name,file_url,file_domain_url,file_kind,createTime,rel_id)
+		values
+		(#{id},#{file_name},#{file_url},#{file_domain_url},#{file_kind},now(),#{rel_id})
+	</insert>
+
+	<delete id="deleteFileInfo" parameterType="com.wuyou.fileInfo.bean.FileInfoBean">
+		delete from t_file_info
+		where id = #{id}
+	</delete>
+    <delete id="deleteFileInfoById">
+		delete from t_file_info
+		where rel_id = #{id}
+	</delete>
+
+    <update id="updateFileInfo" parameterType="com.wuyou.fileInfo.bean.FileInfoBean">
+		update t_file_info
+		<set>
+			<if test="id !=null">
+				id = #{id},
+			</if>
+			<if test="file_name !=null">
+				file_name = #{file_name},
+			</if>
+			<if test="file_url !=null">
+				file_url = #{file_url},
+			</if>
+			<if test="file_domain_url !=null">
+				file_domain_url = #{file_domain_url},
+			</if>
+			<if test="file_kind !=null">
+				file_kind = #{file_kind},
+			</if>
+			<if test="createTime !=null">
+				createTime = #{createTime},
+			</if>
+			<if test="rel_id !=null">
+				rel_id = #{rel_id},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<select id="queryFileInfoList" parameterType="com.wuyou.fileInfo.bean.FileInfoPageBean" resultType="com.wuyou.fileInfo.bean.FileInfoBean">
+		select 
+		id,file_name,file_url,file_domain_url,file_kind,createTime,rel_id
+		 from t_file_info
+		<where>
+			<if test="id !=null">
+				 and id = #{id}
+			</if>
+			<if test="file_name !=null">
+				 and file_name = #{file_name}
+			</if>
+			<if test="file_url !=null">
+				 and file_url = #{file_url}
+			</if>
+			<if test="file_domain_url !=null">
+				 and file_domain_url = #{file_domain_url}
+			</if>
+			<if test="file_kind !=null">
+				 and file_kind = #{file_kind}
+			</if>
+			<if test="createTime !=null">
+				 and createTime = #{createTime}
+			</if>
+			<if test="rel_id !=null">
+				 and rel_id = #{rel_id}
+			</if>
+		</where>
+		<if test="page != null" >
+			<![CDATA[  limit #{page.startNum},#{page.pageSize} ]]>
+		</if>
+	</select>
+
+	<select id="queryFileInfoCount" parameterType="com.wuyou.fileInfo.bean.FileInfoBean" resultType="Integer">
+		select 
+		 count(1) 
+		 from t_file_info
+		<where>
+			<if test="id !=null">
+				 and id = #{id}
+			</if>
+			<if test="file_name !=null">
+				 and file_name = #{file_name}
+			</if>
+			<if test="file_url !=null">
+				 and file_url = #{file_url}
+			</if>
+			<if test="file_domain_url !=null">
+				 and file_domain_url = #{file_domain_url}
+			</if>
+			<if test="file_kind !=null">
+				 and file_kind = #{file_kind}
+			</if>
+			<if test="createTime !=null">
+				 and createTime = #{createTime}
+			</if>
+			<if test="rel_id !=null">
+				 and rel_id = #{rel_id}
+			</if>
+		</where>
+	</select>
+
+	<select id="querySingleFileInfo" parameterType="com.wuyou.fileInfo.bean.FileInfoBean" resultType="com.wuyou.fileInfo.bean.FileInfoBean">
+		select 
+		id,file_name,file_url,file_domain_url,file_kind,createTime,rel_id
+		 from t_file_info
+		<where>
+			<if test="id !=null">
+				 and id = #{id}
+			</if>
+			<if test="file_name !=null">
+				 and file_name = #{file_name}
+			</if>
+			<if test="file_url !=null">
+				 and file_url = #{file_url}
+			</if>
+			<if test="file_domain_url !=null">
+				 and file_domain_url = #{file_domain_url}
+			</if>
+			<if test="file_kind !=null">
+				 and file_kind = #{file_kind}
+			</if>
+			<if test="createTime !=null">
+				 and createTime = #{createTime}
+			</if>
+			<if test="rel_id !=null">
+				 and rel_id = #{rel_id}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

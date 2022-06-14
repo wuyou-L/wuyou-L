@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.bookBorrow.dao.BookBorrowMapper">
+    <insert id="addBookBorrow" parameterType="com.wuyou.bookBorrow.bean.BookBorrowBean">
+        insert into t_book_borrow
+        (borrow_id, borrow_user_id, borrow_book_id, borrow_time_create,
+         borrow_time_end, borrow_admin_account, borrow_status, borrow_return_type)
+        values (#{borrow_id}, #{borrow_user_id}, #{borrow_book_id}, now(), #{borrow_time_end}, #{borrow_admin_account},
+                #{borrow_status}, #{borrow_return_type})
+    </insert>
+
+    <delete id="deleteBookBorrow" parameterType="com.wuyou.bookBorrow.bean.BookBorrowBean">
+        delete
+        from t_book_borrow
+        where id = #{id}
+    </delete>
+
+    <update id="updateBookBorrow" parameterType="com.wuyou.bookBorrow.bean.BookBorrowBean">
+        update t_book_borrow
+        <set>
+            <if test="borrow_id !=null">
+                borrow_id = #{borrow_id},
+            </if>
+            <if test="borrow_user_id !=null">
+                borrow_user_id = #{borrow_user_id},
+            </if>
+            <if test="borrow_book_id !=null">
+                borrow_book_id = #{borrow_book_id},
+            </if>
+            <if test="borrow_time_create !=null">
+                and borrow_time_create <![CDATA[>=]]> #{borrow_time_create}
+            </if>
+            <if test="borrow_time_create_end !=null">
+                and borrow_time_create <![CDATA[<=]]> #{borrow_time_create_end}
+            </if>
+            <if test="borrow_time_end !=null">
+                and borrow_time_end <![CDATA[>=]]> #{borrow_time_end}
+            </if>
+            <if test="borrow_time_end_end !=null">
+                and borrow_time_end <![CDATA[<=]]> #{borrow_time_end_end}
+            </if>
+            <if test="borrow_admin_account !=null">
+                borrow_admin_account = #{borrow_admin_account},
+            </if>
+            <if test="borrow_status !=null">
+                borrow_status = #{borrow_status},
+                borrow_time_end = now(),
+            </if>
+            <if test="borrow_return_type !=null">
+                borrow_return_type = #{borrow_return_type},
+            </if>
+        </set>
+        where borrow_id = #{borrow_id}
+    </update>
+
+    <select id="queryBookBorrowList" parameterType="com.wuyou.bookBorrow.bean.BookBorrowPageBean"
+            resultType="com.wuyou.bookBorrow.bean.BookBorrowBean">
+        select
+        borrow_id,borrow_user_id,borrow_book_id,borrow_time_create,borrow_time_end,borrow_admin_account,borrow_status,borrow_return_type,
+        b.book_name as borrow_book_name, c.user_name as borrow_user_name
+        from t_book_borrow a
+        left join t_book b on a.borrow_book_id = b.book_id
+        left join t_user c on c.user_id = a.borrow_user_id
+        <where>
+            <if test="borrow_id !=null">
+                and borrow_id = #{borrow_id}
+            </if>
+            <if test="borrow_user_id !=null">
+                and borrow_user_id = #{borrow_user_id}
+            </if>
+            <if test="borrow_user_name !=null">
+                and c.user_name like "%%${borrow_user_name}%%"
+            </if>
+            <if test="borrow_book_id !=null">
+                and borrow_book_id = #{borrow_book_id}
+            </if>
+            <if test="borrow_book_name !=null">
+                and b.book_name like "%%${borrow_book_name}%%"
+            </if>
+            <if test="borrow_time_create !=null">
+                and borrow_time_create = #{borrow_time_create}
+            </if>
+            <if test="borrow_time_end !=null">
+                and borrow_time_end = #{borrow_time_end}
+            </if>
+            <if test="borrow_admin_account !=null">
+                and borrow_admin_account = #{borrow_admin_account}
+            </if>
+            <if test="borrow_status !=null">
+                and borrow_status = #{borrow_status}
+            </if>
+            <if test="borrow_return_type !=null">
+                and borrow_return_type = #{borrow_return_type}
+            </if>
+        </where>
+        <if test="page != null">
+            <![CDATA[  limit #{page.startNum},#{page.pageSize} ]]>
+        </if>
+    </select>
+
+    <select id="queryBookBorrowCount" parameterType="com.wuyou.bookBorrow.bean.BookBorrowBean" resultType="Integer">
+        select
+        count(1)
+        from t_book_borrow a
+        left join t_book b on a.borrow_book_id = b.book_id
+        left join t_user c on c.user_id = a.borrow_user_id
+        <where>
+            <if test="borrow_id !=null">
+                and borrow_id = #{borrow_id}
+            </if>
+            <if test="borrow_user_id !=null">
+                and borrow_user_id = #{borrow_user_id}
+            </if>
+            <if test="borrow_user_name !=null">
+                and c.user_name like "%%${borrow_user_name}%%"
+            </if>
+            <if test="borrow_book_id !=null">
+                and borrow_book_id = #{borrow_book_id}
+            </if>
+            <if test="borrow_book_name !=null">
+                and b.book_name like "%%${borrow_book_name}%%"
+            </if>
+            <if test="borrow_time_create !=null">
+                and borrow_time_create <![CDATA[>=]]> #{borrow_time_create}
+            </if>
+            <if test="borrow_time_create_end !=null">
+                and borrow_time_create <![CDATA[<=]]> #{borrow_time_create_end}
+            </if>
+            <if test="borrow_time_end !=null">
+                and borrow_time_end <![CDATA[>=]]> #{borrow_time_end}
+            </if>
+            <if test="borrow_time_end_end !=null">
+                and borrow_time_end <![CDATA[<=]]> #{borrow_time_end_end}
+            </if>
+            <if test="borrow_admin_account !=null">
+                and borrow_admin_account = #{borrow_admin_account}
+            </if>
+            <if test="borrow_status !=null">
+                and borrow_status = #{borrow_status}
+            </if>
+            <if test="borrow_return_type !=null">
+                and borrow_return_type = #{borrow_return_type}
+            </if>
+        </where>
+    </select>
+
+    <select id="querySingleBookBorrow" parameterType="com.wuyou.bookBorrow.bean.BookBorrowBean"
+            resultType="com.wuyou.bookBorrow.bean.BookBorrowBean">
+        select
+        borrow_id,borrow_user_id,borrow_book_id,borrow_time_create,borrow_time_end,borrow_admin_account,borrow_status,borrow_return_type
+        from t_book_borrow
+        <where>
+            <if test="borrow_id !=null">
+                and borrow_id = #{borrow_id}
+            </if>
+            <if test="borrow_user_id !=null">
+                and borrow_user_id = #{borrow_user_id}
+            </if>
+            <if test="borrow_book_id !=null">
+                and borrow_book_id = #{borrow_book_id}
+            </if>
+            <if test="borrow_time_create !=null">
+                and borrow_time_create = #{borrow_time_create}
+            </if>
+            <if test="borrow_time_end !=null">
+                and borrow_time_end = #{borrow_time_end}
+            </if>
+            <if test="borrow_admin_account !=null">
+                and borrow_admin_account = #{borrow_admin_account}
+            </if>
+            <if test="borrow_status !=null">
+                and borrow_status = #{borrow_status}
+            </if>
+            <if test="borrow_return_type !=null">
+                and borrow_return_type = #{borrow_return_type}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

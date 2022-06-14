@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.userRole.dao.UserRoleMapper">
+	<insert id="addUserRole" parameterType="com.wuyou.userRole.bean.UserRoleBean">
+		insert into t_user_role
+		(role_id,role_code,role_name,role_desc)
+		values
+		(#{role_id},#{role_code},#{role_name},#{role_desc})
+	</insert>
+
+	<delete id="deleteUserRole" parameterType="com.wuyou.userRole.bean.UserRoleBean">
+		delete from t_user_role
+		where role_id = #{role_id}
+	</delete>
+
+	<update id="updateUserRole" parameterType="com.wuyou.userRole.bean.UserRoleBean">
+		update t_user_role
+		<set>
+			<if test="role_id !=null">
+				role_id = #{role_id},
+			</if>
+			<if test="role_code !=null">
+				role_code = #{role_code},
+			</if>
+			<if test="role_name !=null">
+				role_name = #{role_name},
+			</if>
+			<if test="role_desc !=null">
+				role_desc = #{role_desc},
+			</if>
+		</set>
+		where id = #{user_id}
+	</update>
+
+	<select id="queryUserRoleList" parameterType="com.wuyou.userRole.bean.UserRolePageBean" resultType="com.wuyou.userRole.bean.UserRoleBean">
+		select 
+		role_id,role_code,role_name,role_desc
+		 from t_user_role
+		<where>
+			<if test="role_id !=null">
+				 and role_id = #{role_id}
+			</if>
+			<if test="role_code !=null">
+				 and role_code = #{role_code}
+			</if>
+			<if test="role_name !=null">
+				 and role_name = #{role_name}
+			</if>
+			<if test="role_desc !=null">
+				 and role_desc = #{role_desc}
+			</if>
+		</where>
+		<if test="page != null" >
+			<![CDATA[  limit #{page.startNum},#{page.pageSize} ]]>
+		</if>
+	</select>
+
+	<select id="queryUserRoleCount" parameterType="com.wuyou.userRole.bean.UserRoleBean" resultType="Integer">
+		select 
+		 count(1) 
+		 from t_user_role
+		<where>
+			<if test="role_id !=null">
+				 and role_id = #{role_id}
+			</if>
+			<if test="role_code !=null">
+				 and role_code = #{role_code}
+			</if>
+			<if test="role_name !=null">
+				 and role_name = #{role_name}
+			</if>
+			<if test="role_desc !=null">
+				 and role_desc = #{role_desc}
+			</if>
+		</where>
+	</select>
+
+	<select id="querySingleUserRole" parameterType="com.wuyou.userRole.bean.UserRoleBean" resultType="com.wuyou.userRole.bean.UserRoleBean">
+		select 
+		role_id,role_code,role_name,role_desc
+		 from t_user_role
+		<where>
+			<if test="role_id !=null">
+				 and role_id = #{role_id}
+			</if>
+			<if test="role_code !=null">
+				 and role_code = #{role_code}
+			</if>
+			<if test="role_name !=null">
+				 and role_name = #{role_name}
+			</if>
+			<if test="role_desc !=null">
+				 and role_desc = #{role_desc}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

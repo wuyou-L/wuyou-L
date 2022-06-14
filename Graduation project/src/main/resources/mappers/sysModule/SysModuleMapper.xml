@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.sysModule.dao.SysModuleMapper">
+	<insert id="addSysModule" parameterType="com.wuyou.sysModule.bean.SysModuleBean">
+		insert into t_sys_module
+		(id,sys_code,sys_name,mod_code,mod_name,mod_desc,mod_parent_code,mod_parent_name,mod_ramark, is_using)
+		values
+		(#{id},#{sys_code},#{sys_name},#{mod_code},#{mod_name},#{mod_desc},#{mod_parent_code},#{mod_parent_name},#{mod_ramark}, #{is_using})
+	</insert>
+
+	<delete id="deleteSysModule" parameterType="com.wuyou.sysModule.bean.SysModuleBean">
+		delete from t_sys_module
+		where id = #{id}
+	</delete>
+
+	<update id="updateSysModule" parameterType="com.wuyou.sysModule.bean.SysModuleBean">
+		update t_sys_module
+		<set>
+			<if test="id !=null">
+				id = #{id},
+			</if>
+			<if test="sys_code !=null">
+				sys_code = #{sys_code},
+			</if>
+			<if test="sys_name !=null">
+				sys_name = #{sys_name},
+			</if>
+			<if test="mod_code !=null">
+				mod_code = #{mod_code},
+			</if>
+			<if test="mod_name !=null">
+				mod_name = #{mod_name},
+			</if>
+			<if test="mod_desc !=null">
+				mod_desc = #{mod_desc},
+			</if>
+			<if test="mod_parent_code !=null">
+				mod_parent_code = #{mod_parent_code},
+			</if>
+			<if test="mod_parent_name !=null">
+				mod_parent_name = #{mod_parent_name},
+			</if>
+			<if test="mod_ramark !=null">
+				mod_ramark = #{mod_ramark},
+			</if>
+			<if test="is_using !=null">
+				is_using = #{is_using},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<update id="updateSysModuleByCode" parameterType="com.wuyou.sysModule.bean.SysModuleBean">
+		update t_sys_module
+		<set>
+			<if test="is_using !=null">
+				is_using = #{is_using},
+			</if>
+		</set>
+		where mod_code = #{mod_code}
+	</update>
+
+	<select id="querySysModuleList" parameterType="com.wuyou.sysModule.bean.SysModulePageBean" resultType="com.wuyou.sysModule.bean.SysModuleBean">
+		select 
+		id,sys_code,sys_name,mod_code,mod_name,mod_desc,mod_parent_code,mod_parent_name,mod_ramark,is_using
+		 from t_sys_module
+		<where>
+			<if test="id !=null">
+				 and id = #{id}
+			</if>
+			<if test="sys_code !=null">
+				 and sys_code = #{sys_code}
+			</if>
+			<if test="sys_name !=null">
+				 and sys_name = #{sys_name}
+			</if>
+			<if test="mod_code !=null">
+				 and mod_code = #{mod_code}
+			</if>
+			<if test="mod_name !=null">
+				 and mod_name = #{mod_name}
+			</if>
+			<if test="mod_desc !=null">
+				 and mod_desc = #{mod_desc}
+			</if>
+			<if test="mod_parent_code !=null">
+				 and mod_parent_code = #{mod_parent_code}
+			</if>
+			<if test="mod_parent_name !=null">
+				 and mod_parent_name = #{mod_parent_name}
+			</if>
+			<if test="mod_ramark !=null">
+				 and mod_ramark = #{mod_ramark}
+			</if>
+			<if test="is_using !=null">
+				and is_using = #{is_using}
+			</if>
+		</where>
+		<if test="page != null" >
+			<![CDATA[  limit #{page.startNum},#{page.pageSize} ]]>
+		</if>
+	</select>
+
+	<select id="querySysModuleCount" parameterType="com.wuyou.sysModule.bean.SysModuleBean" resultType="Integer">
+		select 
+		 count(1) 
+		 from t_sys_module
+		<where>
+			<if test="id !=null">
+				 and id = #{id}
+			</if>
+			<if test="sys_code !=null">
+				 and sys_code = #{sys_code}
+			</if>
+			<if test="sys_name !=null">
+				 and sys_name = #{sys_name}
+			</if>
+			<if test="mod_code !=null">
+				 and mod_code = #{mod_code}
+			</if>
+			<if test="mod_name !=null">
+				 and mod_name = #{mod_name}
+			</if>
+			<if test="mod_desc !=null">
+				 and mod_desc = #{mod_desc}
+			</if>
+			<if test="mod_parent_code !=null">
+				 and mod_parent_code = #{mod_parent_code}
+			</if>
+			<if test="mod_parent_name !=null">
+				 and mod_parent_name = #{mod_parent_name}
+			</if>
+			<if test="mod_ramark !=null">
+				 and mod_ramark = #{mod_ramark}
+			</if>
+			<if test="is_using !=null">
+			and is_using = #{is_using}
+		</if>
+		</where>
+	</select>
+
+	<select id="querySingleSysModule" parameterType="com.wuyou.sysModule.bean.SysModuleBean" resultType="com.wuyou.sysModule.bean.SysModuleBean">
+		select 
+		id,sys_code,sys_name,mod_code,mod_name,mod_desc,mod_parent_code,mod_parent_name,mod_ramark,is_using
+		 from t_sys_module
+		<where>
+			<if test="id !=null">
+				 and id = #{id}
+			</if>
+			<if test="sys_code !=null">
+				 and sys_code = #{sys_code}
+			</if>
+			<if test="sys_name !=null">
+				 and sys_name = #{sys_name}
+			</if>
+			<if test="mod_code !=null">
+				 and mod_code = #{mod_code}
+			</if>
+			<if test="mod_name !=null">
+				 and mod_name = #{mod_name}
+			</if>
+			<if test="mod_desc !=null">
+				 and mod_desc = #{mod_desc}
+			</if>
+			<if test="mod_parent_code !=null">
+				 and mod_parent_code = #{mod_parent_code}
+			</if>
+			<if test="mod_parent_name !=null">
+				 and mod_parent_name = #{mod_parent_name}
+			</if>
+			<if test="mod_ramark !=null">
+				 and mod_ramark = #{mod_ramark}
+			</if>
+			<if test="is_using !=null">
+			and is_using = #{is_using}
+		</if>
+		</where>
+	</select>
+	<select id="queryMaxCode" resultType="java.lang.String">
+		select max(mod_code) from t_sys_module where mod_parent_code = #{modCode}
+	</select>
+</mapper>

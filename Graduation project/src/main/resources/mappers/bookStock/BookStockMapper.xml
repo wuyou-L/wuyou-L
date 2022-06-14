@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.bookStock.dao.BookStockMapper">
+	<insert id="addBookStock" parameterType="com.wuyou.bookStock.bean.BookStockBean">
+		insert into t_book_stock
+		(stock_id,stock_book_id,stock_num,stock_occupable,stock_batch,stock_create_account,stock_create_time,stock_source)
+		values
+		(#{stock_id},#{stock_book_id},#{stock_num},#{stock_occupable},#{stock_batch},#{stock_create_account},#{stock_create_time},#{stock_source})
+	</insert>
+
+	<delete id="deleteBookStock" parameterType="com.wuyou.bookStock.bean.BookStockBean">
+		delete from t_book_stock
+		<where>
+			<if test="stock_id != null">
+				stock_id = #{stock_id}
+			</if>
+			<if test="stock_book_id != null">
+				stock_book_id = #{stock_book_id}
+			</if>
+		</where>
+	</delete>
+
+	<update id="updateBookStock" parameterType="com.wuyou.bookStock.bean.BookStockBean">
+		update t_book_stock
+		<set>
+			<if test="stock_id !=null">
+				stock_id = #{stock_id},
+			</if>
+			<if test="stock_book_id !=null">
+				stock_book_id = #{stock_book_id},
+			</if>
+			<if test="stock_num !=null">
+				stock_num = #{stock_num},
+			</if>
+			<if test="stock_occupable !=null">
+				stock_occupable = #{stock_occupable},
+			</if>
+			<if test="stock_batch !=null">
+				stock_batch = #{stock_batch},
+			</if>
+			<if test="stock_create_account !=null">
+				stock_create_account = #{stock_create_account},
+			</if>
+			<if test="stock_create_time !=null">
+				stock_create_time = #{stock_create_time},
+			</if>
+			<if test="stock_source !=null">
+				stock_source = #{stock_source},
+			</if>
+		</set>
+		<where>
+			<if test="stock_id !=null">
+				and stock_id = #{stock_id}
+			</if>
+			<if test="stock_book_id !=null">
+				and stock_book_id = #{stock_book_id}
+			</if>
+		</where>
+	</update>
+
+	<select id="queryBookStockList" parameterType="com.wuyou.bookStock.bean.BookStockPageBean" resultType="com.wuyou.bookStock.bean.BookStockBean">
+		select 
+		stock_id,stock_book_id,stock_num,stock_occupable,stock_batch,stock_create_account,stock_create_time,stock_source
+		 from t_book_stock
+		<where>
+			<if test="stock_id !=null">
+				 and stock_id = #{stock_id}
+			</if>
+			<if test="stock_book_id !=null">
+				 and stock_book_id = #{stock_book_id}
+			</if>
+			<if test="stock_num !=null">
+				 and stock_num = #{stock_num}
+			</if>
+			<if test="stock_occupable !=null">
+				 and stock_occupable = #{stock_occupable}
+			</if>
+			<if test="stock_batch !=null">
+				 and stock_batch = #{stock_batch}
+			</if>
+			<if test="stock_create_account !=null">
+				 and stock_create_account = #{stock_create_account}
+			</if>
+			<if test="stock_create_time !=null">
+				 and stock_create_time = #{stock_create_time}
+			</if>
+			<if test="stock_source !=null">
+				 and stock_source = #{stock_source}
+			</if>
+		</where>
+		<if test="page != null" >
+			<![CDATA[  limit #{page.startNum},#{page.pageSize} ]]>
+		</if>
+	</select>
+
+	<select id="queryBookStockCount" parameterType="com.wuyou.bookStock.bean.BookStockBean" resultType="Integer">
+		select 
+		 count(1) 
+		 from t_book_stock
+		<where>
+			<if test="stock_id !=null">
+				 and stock_id = #{stock_id}
+			</if>
+			<if test="stock_book_id !=null">
+				 and stock_book_id = #{stock_book_id}
+			</if>
+			<if test="stock_num !=null">
+				 and stock_num = #{stock_num}
+			</if>
+			<if test="stock_occupable !=null">
+				 and stock_occupable = #{stock_occupable}
+			</if>
+			<if test="stock_batch !=null">
+				 and stock_batch = #{stock_batch}
+			</if>
+			<if test="stock_create_account !=null">
+				 and stock_create_account = #{stock_create_account}
+			</if>
+			<if test="stock_create_time !=null">
+				 and stock_create_time = #{stock_create_time}
+			</if>
+			<if test="stock_source !=null">
+				 and stock_source = #{stock_source}
+			</if>
+		</where>
+	</select>
+
+	<select id="querySingleBookStock" parameterType="com.wuyou.bookStock.bean.BookStockBean" resultType="com.wuyou.bookStock.bean.BookStockBean">
+		select 
+		stock_id,stock_book_id,stock_num,stock_occupable,stock_batch,stock_create_account,stock_create_time,stock_source
+		 from t_book_stock
+		<where>
+			<if test="stock_id !=null">
+				 and stock_id = #{stock_id}
+			</if>
+			<if test="stock_book_id !=null">
+				 and stock_book_id = #{stock_book_id}
+			</if>
+			<if test="stock_num !=null">
+				 and stock_num = #{stock_num}
+			</if>
+			<if test="stock_occupable !=null">
+				 and stock_occupable = #{stock_occupable}
+			</if>
+			<if test="stock_batch !=null">
+				 and stock_batch = #{stock_batch}
+			</if>
+			<if test="stock_create_account !=null">
+				 and stock_create_account = #{stock_create_account}
+			</if>
+			<if test="stock_create_time !=null">
+				 and stock_create_time = #{stock_create_time}
+			</if>
+			<if test="stock_source !=null">
+				 and stock_source = #{stock_source}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

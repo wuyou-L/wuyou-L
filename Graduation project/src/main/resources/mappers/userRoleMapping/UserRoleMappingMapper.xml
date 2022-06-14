@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.userRoleMapping.dao.UserRoleMappingMapper">
+	<insert id="addUserRoleMapping" parameterType="com.wuyou.userRoleMapping.bean.UserRoleMappingBean">
+		insert into t_user_role_mapping
+		(role_code,mod_code,ext_col1,ext_col2,ext_col3)
+		values
+		(#{role_code},#{mod_code},#{ext_col1},#{ext_col2},#{ext_col3})
+	</insert>
+
+	<delete id="deleteUserRoleMapping" parameterType="com.wuyou.userRoleMapping.bean.UserRoleMappingBean">
+		delete from t_user_role_mapping
+		where role_code = #{role_code}
+	</delete>
+
+	<update id="updateUserRoleMapping" parameterType="com.wuyou.userRoleMapping.bean.UserRoleMappingBean">
+		update t_user_role_mapping
+		<set>
+			<if test="role_code !=null">
+				role_code = #{role_code},
+			</if>
+			<if test="mod_code !=null">
+				mod_code = #{mod_code},
+			</if>
+			<if test="ext_col1 !=null">
+				ext_col1 = #{ext_col1},
+			</if>
+			<if test="ext_col2 !=null">
+				ext_col2 = #{ext_col2},
+			</if>
+			<if test="ext_col3 !=null">
+				ext_col3 = #{ext_col3},
+			</if>
+		</set>
+		where role_code = #{role_code}
+	</update>
+
+	<select id="queryUserRoleMappingList" parameterType="com.wuyou.userRoleMapping.bean.UserRoleMappingPageBean" resultType="com.wuyou.userRoleMapping.bean.UserRoleMappingBean">
+		select 
+		role_code,mod_code,ext_col1,ext_col2,ext_col3
+		 from t_user_role_mapping
+		<where>
+			<if test="role_code !=null">
+				 and role_code = #{role_code}
+			</if>
+			<if test="mod_code !=null">
+				 and mod_code = #{mod_code}
+			</if>
+			<if test="ext_col1 !=null">
+				 and ext_col1 = #{ext_col1}
+			</if>
+			<if test="ext_col2 !=null">
+				 and ext_col2 = #{ext_col2}
+			</if>
+			<if test="ext_col3 !=null">
+				 and ext_col3 = #{ext_col3}
+			</if>
+		</where>
+		<if test="page != null" >
+			<![CDATA[  limit #{page.startNum},#{page.pageSize} ]]>
+		</if>
+	</select>
+
+	<select id="queryUserRoleMappingCount" parameterType="com.wuyou.userRoleMapping.bean.UserRoleMappingBean" resultType="Integer">
+		select 
+		 count(1) 
+		 from t_user_role_mapping
+		<where>
+			<if test="role_code !=null">
+				 and role_code = #{role_code}
+			</if>
+			<if test="mod_code !=null">
+				 and mod_code = #{mod_code}
+			</if>
+			<if test="ext_col1 !=null">
+				 and ext_col1 = #{ext_col1}
+			</if>
+			<if test="ext_col2 !=null">
+				 and ext_col2 = #{ext_col2}
+			</if>
+			<if test="ext_col3 !=null">
+				 and ext_col3 = #{ext_col3}
+			</if>
+		</where>
+	</select>
+
+	<select id="querySingleUserRoleMapping" parameterType="com.wuyou.userRoleMapping.bean.UserRoleMappingBean" resultType="com.wuyou.userRoleMapping.bean.UserRoleMappingBean">
+		select 
+		role_code,mod_code,ext_col1,ext_col2,ext_col3
+		 from t_user_role_mapping
+		<where>
+			<if test="role_code !=null">
+				 and role_code = #{role_code}
+			</if>
+			<if test="mod_code !=null">
+				 and mod_code = #{mod_code}
+			</if>
+			<if test="ext_col1 !=null">
+				 and ext_col1 = #{ext_col1}
+			</if>
+			<if test="ext_col2 !=null">
+				 and ext_col2 = #{ext_col2}
+			</if>
+			<if test="ext_col3 !=null">
+				 and ext_col3 = #{ext_col3}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>
